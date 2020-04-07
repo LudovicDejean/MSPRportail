@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-sd">
-                <a href='index.php?loc=6' class="rounded">Contact</a>
+                <a href='index.php?loc=2' class="rounded">Contact</a>
             </div>
         </div>
     </div>
