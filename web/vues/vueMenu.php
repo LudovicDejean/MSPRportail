@@ -15,7 +15,7 @@
                     </a> -->
                     <div class="col-sd align-self-center">
                         <h4 id="tetePage">
-                            SITE DES CLINIQUES COOLS
+                            SITE DES CLINIQUES UNIES
                         </h4>
                     </div>
                 </div>
