@@ -1,0 +1,1372 @@
+/*@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');*/
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat-Regular.ttf');
+    src: url('../fonts/Montserrat-Regular.ttf') format('ttf');
+    /*     url('quadranta.woff') format('woff'),
+         url('quadranta.eot?#iefix') format('embedded-opentype'),
+         url('quadranta.svg#QuadrantaBold') format('svg');*/
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: "Verdana", serif;
+    /*font-family: 'Montserrat', sans-serif;*/
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#navbar{
+    z-index: 99;
+}
+
+/*UTILS*/
+.margTop{
+    margin-top: 10px;
+}
+
+
+
+
+
+
+/* - - - - - - - - - - - -    MATERIAL DESIGN   - - - - - - - - - - - -  */
+.field {
+    display: flex;
+    flex-flow: column-reverse;
+}
+
+
+/**
+* Add a transition to the label and input.
+* I'm not even sure that touch-action: manipulation works on
+* inputs, but hey, it's new and cool and could remove the 
+* pesky delay.
+*/
+label,
+input {
+    transition: all 0.2s;
+    touch-action: manipulation;
+}
+
+input {
+    -webkit-appearance: none;
+    cursor: text;
+}
+
+/**
+* Translate down and scale the label up to cover the placeholder,
+* when following an input (with placeholder-shown support).
+* Also make sure the label is only on one row, at max 2/3rds of the
+* field—to make sure it scales properly and doesn't wrap.
+*/
+input:placeholder-shown + label {
+    cursor: text;
+    transform-origin: left bottom;
+    transform: translate(0, 2.35rem) scale(1.2);
+}
+
+/**
+* By default, the placeholder should be transparent. Also, it should 
+* inherit the transition.
+*/
+::-webkit-input-placeholder {
+    opacity: 0;
+    transition: inherit;
+}
+
+/**
+* Show the placeholder when the input is focused.
+*/
+/*input:focus::-webkit-input-placeholder {
+    opacity: 1;
+}*/
+
+/**
+* When the element is focused, remove the label transform.
+* Also, do this when the placeholder is _not_ shown, i.e. when 
+* there's something in the input at all.
+*/
+input:not(:placeholder-shown) + label,
+input:focus + label {
+    transform: translate(0, 0) scale(1);
+    cursor: pointer;
+    /*border-bottom: blue dotted 2px;*/
+    /*color: tan;*/
+}
+
+
+label {
+    color: slategray;
+    font-size: 12px;
+}
+
+
+
+/* - - - - - - - - - - - -    FIN MATERIAL DESIGN   - - - - - - - - - - - -  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* - - - - - - - - - - - -    FENETRE MODALE   - - - - - - - - - - - -  */
+.modal{
+    transition-duration: 1s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.8);
+    /*    background-image:
+            radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.9),
+            rgba(0, 0, 0, 0.9) 30%
+            );*/
+}
+/*MASQUER BARRE DE SCROLL DE LA FENETRE MODALE*/
+.modal::-webkit-scrollbar { 
+    width: 0 !important 
+}
+.modal { 
+    overflow: -moz-scrollbars-none; 
+}
+.modal { 
+    -ms-overflow-style: none; 
+}
+
+.modal-dialog{
+    max-width: 90%;
+    max-height: 100vh;
+    margin:0  auto;
+}
+.imgbox {
+    display: grid;
+    height: 90%;
+}
+
+.center_fit {
+    margin: auto;
+    margin-top: 5%;
+    max-width: 80%;
+    max-height: 80vh;
+}
+/* - - - - - -     FIN MODALE       - - - - - - - - - - - - - -*/
+
+
+
+
+
+
+/* - - - - -   OMBRAGE DES IMAGES ON HOVER   - - - - - - */
+.imgModal {
+    /*position: relative;*/
+    /*box-shadow: 0 1px 2px rgba(0,0,0,0.45);*/
+    transition: filter 0.3s ease-in-out;
+    filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.25));
+}
+.imgModal:hover {
+    cursor: zoom-in;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+    filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.45));
+
+}
+
+/*   - - - - - - - - -      TETE DE PAGE   - - - - - - - - - -  */
+
+
+
+#logoAMMA { 
+    background-image:url("../android-chrome-192x192.png") ;
+    width: 100px;
+    height: 100px;
+    /*transform: scale(0.6);*/
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+
+.logoAmmaAccueil{
+    position: absolute;
+    display: block;
+    width: 90px;
+    height: 90px;
+    left: 47%;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+    /*overflow:hidden;*/
+    margin: 0 auto;
+    z-index: 10;
+    transition-duration: 1s;
+}
+
+.texteLogoAMMA {
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    left:80px;
+    /*margin-bottom: 100px;*/
+}
+
+.move1{
+    transform: scale(0.7);
+    top:5%;
+    animation: shake1 1s;
+    background-image: url("../img/logoAMMA_Lettre_01.svg") ;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    transition-timing-function: ease-in-out;
+}
+
+.move2{
+    transform: scale(0.7);
+    top:25%;
+    animation: shake1 3s;
+    background-image: url("../img/logoAMMA_Lettre_02.svg") ;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    transition-timing-function: ease-in-out;
+
+}
+
+.move3{
+    transform: scale(0.7);
+    top:45%;
+    animation: shake1 2s;
+    background-image: url("../img/logoAMMA_Lettre_03.svg") ;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    transition-timing-function: ease-in-out;
+
+}
+
+.move4{
+    transform: scale(0.7);
+    top:65%;
+    animation: shake1 4s;
+    background-image: url("../img/logoAMMA_Lettre_04.svg") ;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    transition-timing-function: ease-in-out;
+
+}
+
+.logoAmma:hover{
+    animation: shake2 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    transition-timing-function: ease-in-out;
+}
+@keyframes shake1 {
+    /*ANIM MENU ACCUEIL*/
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(0px, 2px) rotate(-0.9deg); }
+    20% { transform: translate(1px, 3px) rotate(-0.3deg); }
+    30% { transform: translate(2px, 2px) rotate(-0.2deg); }
+    40% { transform: translate(1px, 1px) rotate(0deg); }
+    50% { transform: translate(2px, 2px) rotate(0.4deg); }
+    60% { transform: translate(2px, 1px, 9) rotate(0deg); }
+    70% { transform: translate(1px, 0px, 3) rotate(-0.2deg); }
+    80% { transform: translate(0px, -1px, 12) rotate(-0.1deg); }
+    90% { transform: translate(1px, 0px, 6) rotate(0.2deg); }
+    100% { transform: translate(1px, 1px, 9) rotate(0deg); }
+}
+
+@keyframes shake2 {
+    0% { transform: translate(0px, 0px) rotate(0deg); }
+    5% { transform: translate(-1px, -1px) rotate(-0.2deg); }
+    15% { transform: translate(-6px, 0px) rotate(0deg); }
+    25% { transform: translate(-1px, 1px) rotate(0.2deg); }
+    35% { transform: translate(0px, 8px) rotate(0.4deg); }
+    45% { transform: translate(-1px, 2px) rotate(0.6deg); }
+    55% { transform: translate(-9px, 1px) rotate(0.8deg); }
+    65% { transform: translate(-1px, 0px) rotate(0.6deg); }
+    75% { transform: translate(-1px, -5px) rotate(0.4deg); }
+    85% { transform: translate(6px, 0px) rotate(0.2deg); }
+    100% { transform: translate(1px, 9px) rotate(0.2deg); }
+}
+
+#tetePage {
+    text-align: center;
+}
+
+
+/*MENU*/
+.colle {
+    position: fixed;
+    top: 0;
+    /*width: 88%;*/
+    z-index: 99;
+}
+.decalageSticky {
+    padding-top: 70px;
+
+}
+ul#menu {
+    width: 100%;
+    font-size: 20px;
+}
+#menu {
+    justify-content: space-between;
+}
+/*.bg-light {
+    background-color: rgba(0, 0, 0, 0)!important; 
+}*/
+/*.tetePage, .nav-link {
+    height: 50px;
+}*/
+/*.nav-tabs {
+    border-bottom: none;
+}*/
+
+
+
+
+
+/*ACCUEIL*/
+
+.ep_img5_big{
+    margin-top: 30px;
+    width: 300px;
+    height: 410px;
+    background-image: url("../img/Resized_mini/5.5_LUMIERE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+
+.texteAccueil1{
+    margin-top: 30px;
+    /*width: 50%;*/
+}
+
+.texteAccueil2{
+    margin-top: 40px;
+    width: 70%;
+    text-align: center;
+}
+
+.imgAccueil{
+    /*display: block;*/
+    margin-top: 0px;
+    width: 475px;
+    height: 358px;
+    background-image: url("../img/Resized_mini/imgAccueil.jpg");
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+    transform: scale(0.7);
+    box-shadow: 10px 10px 5px grey;
+
+}
+.artistePeintre{
+    padding-top: 50px;
+}
+
+/*REGARD*/
+
+.titre_regard{
+    text-align: center;
+}
+
+.regard_img_1.rounded.img-fluid {
+    margin: 0 auto;
+}
+.regard_img_1 {
+    /*display: block;*/
+    width: 100%;
+    height: 480px;
+    background-image: url("../img/Resized_mini/regard_1.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.regard_img_2 {
+    /*display: block;*/
+    width: 100%;
+    height: 150px;
+    background-image: url("../img/Resized_mini/regard_2.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+    overflow:hidden;
+    /*transform: scale(0.7);*/
+    margin: 0 auto;
+}
+.texte_regard p{
+    text-align: center;
+}
+.texte_regard h2{
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+
+
+/*EXPERIENCES*/
+.textExperience{
+    text-align: center; 
+}
+.expe_img1 {
+    width:  300px;
+    height: 427px;
+    background-image: url("../img/Resized_mini/3.1_VUE_DU_MUSEE_INGRES_expe1.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img2 {
+    width:  300px;
+    height: 400px;
+    margin: 0 auto;
+    background-image: url("../img/Resized_mini/3.2_VUE_DU_MUSEE_INGRES_2_expe2.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img3 {
+    width:  300px;
+    height: 236px;
+    background-image: url("../img/Resized_mini/3.3_DESSIN_BAS-RELIEF_expe3.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img4 {
+    width:  300px;
+    height: 398px;
+    background-image: url("../img/Resized_mini/3.4_CHRIST_expe4.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img5 {
+    width:  300px;
+    height: 233px;
+    background-image: url("../img/Resized_mini/3.5_CHRIST_expe5.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+/*.expe_leg_img5{
+    width: 300px;
+}*/
+.expe_img6 {
+    width:  300px;
+    height: 223px;
+    background-image: url("../img/Resized_mini/3.6_CHRIST_expe6.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img7 {
+    width:  300px;
+    height: 226px;
+    background-image: url("../img/Resized_mini/3.7_PLACE_NATIONALE_expe7.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+
+.expe_leg_img7{
+    /*overflow: auto;*/
+    width: 300px;
+}
+.expe_img8 {
+    width:  300px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/3.8_ARBORESCENCE_expe8.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img9 {
+    width:  300px;
+    height: 256px;
+    background-image: url("../img/Resized_mini/3.9_COMPOSITION.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img10 {
+    width:  300px;
+    height: 310px;
+    background-image: url("../img/Resized_mini/3.10_GUERRE_ET_PAIX.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img11 {
+    width:  300px;
+    height: 403px;
+    background-image: url("../img/Resized_mini/3.11_PAYSAGE_JUAN_GRIS_.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img12 {
+    width:  300px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/3.12_CHEVELURE.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img13 {
+    width:  300px;
+    height: 117px;
+    background-image: url("../img/Resized_mini/3.13_NATURE_MORTE.jpg");
+    background-position: center center; /* Center the image */
+    background-size: contain;
+    background-repeat: no-repeat; /* Do not repeat the image */
+    /*    background-size: contain;*/
+    /*transform: scale(0.7);*/
+}
+.expe_leg_img13{
+    text-align: center;
+}
+.expe_img14 {
+    width:  200px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/3.14_D'APRES_RON_MUECK.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img15 {
+    width:  300px;
+    height: 408px;
+    background-image: url("../img/Resized_mini/3.15_MODELE_VIVANT_1.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.expe_img16 {
+    width:  300px;
+    height: 402px;
+    background-image: url("../img/Resized_mini/3.16_MODELE_VIVANT_2.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+
+/* - - - - - - - -   SUBSTANCE  - - - - - - - - - */
+.subs_img1{
+    width:  250px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/4.1_LE_CHAOS_4407.JPG");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.subs_img2{
+    width:  250px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/4.2_Eclat_musical.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.subs_img3{
+    width:  300px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/4.3_Tourment.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+
+/* - - - - - - - - - -     CREATIONS   - - - - - - - - - */
+
+.saison{
+    padding-top: 30px;
+}
+.ep_img1 {
+    width: 300px;
+    height: 400px;
+    background-image: url("../img/Resized_mini/5.1_SAGESSE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img2 {
+    width: 300px;
+    height: 381px;
+    background-image: url("../img/Resized_mini/5.2_TOURBILLON_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img3 {
+    width: 300px;
+    height: 380px;
+    background-image: url("../img/Resized_mini/5.3_BLEU_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img4 {
+    width: 300px;
+    height: 384px;
+    background-image: url("../img/Resized_mini/5.4_ENTRE-COULEURS_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img5 {
+    width: 300px;
+    height: 372px;
+    background-image: url("../img/Resized_mini/5_clarte_acrilyque_sur_toile_30x24.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+
+
+
+.ep_img6 {
+    width: 300px;
+    height: 381px;
+    background-image: url("../img/Resized_mini/6_Les_Directions_acrylique_sur_toile_50x40.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img7 {
+    width: 300px;
+    height: 410px;
+    background-image: url("../img/Resized_mini/5.7_BUEE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img8 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.8_RENAîTRE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img9 {
+    width: 300px;
+    height: 303px;
+    background-image: url("../img/Resized_mini/5.9_DEFI_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img10 {
+    width: 300px;
+    height: 406px;
+    background-image: url("../img/Resized_mini/5.10_Abysses_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img11 {
+    width: 300px;
+    height: 376px;
+    background-image: url("../img/Resized_mini/5.11_ECUME_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img12 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.12_ARBRE_ROUGE_2.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img13 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.13_ECLAIR_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img14 {
+    width: 300px;
+    height: 380px;
+    background-image: url("../img/Resized_mini/5.14_VITRE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img15 {
+    width: 300px;
+    height: 380px;
+    background-image: url("../img/Resized_mini/5.15_TECTONIQUE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img16 {
+    width: 300px;
+    height: 372px;
+    background-image: url("../img/Resized_mini/5.16_DEMOLITION.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img17 {
+    width: 300px;
+    height: 371px;
+    /*background-image: url("../img/Resized_mini/5.17_DELIQUESCENCE_1.jpg");*/ 
+    background-image: url("../img/Resized_mini/14_Dislocation_acrylique_sur_toile_70x50.jpg"); 
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img18 {
+    width: 300px;
+    height: 421px;
+    /*background-image: url("../img/Resized_mini/5.18_PERDU-1.jpg");*/
+    background-image: url("../img/Resized_mini/15_Dechirure_huile_sur_toile_70x50.jpg"); 
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img19 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.19_ECRITURE_MATHEMATIQUE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img20 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.20_RECTANGLE_DOR_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img21 {
+    width: 300px;
+    height: 227px;
+    background-image: url("../img/Resized_mini/5.21_INSTRUCTION_2.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img22 {
+    width: 300px;
+    height: 310px;
+    background-image: url("../img/Resized_mini/5.22_ROTATION_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img23 {
+    width: 300px;
+    height: 301px;
+    background-image: url("../img/Resized_mini/5.23_CINETIQUE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img24 {
+    width: 300px;
+    height: 397px;
+    background-image: url("../img/Resized_mini/5.24_CATHEDRALE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img25 {
+    width: 300px;
+    height: 219px;
+    background-image: url("../img/Resized_mini/5.25_CENTENAIRE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+    bottom: 0px;
+}
+.ep_img26 {
+    width: 300px;
+    height: 247px;
+    background-image: url("../img/Resized_mini/5.26_LE_TEMPS_2.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img27 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.27_UN SIECLE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img28 {
+    width: 300px;
+    height: 386px;
+    background-image: url("../img/Resized_mini/5.28_FENETRE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img29 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.29_LA_SERE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img30 {
+    width: 300px;
+    height: 268px;
+    background-image: url("../img/Resized_mini/5.30_PONT_DE_LA_SERE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img31 {
+    width: 300px;
+    height: 238px;
+    background-image: url("../img/Resized_mini/5.31_CYGNES_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img32 {
+    width: 200px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/5.32_CANAL_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img33 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.33_BRIQUETTERIE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img34 {
+    width: 200px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/5.34_CONCORDE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img35 {
+    width: 300px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/5.35_ANIMAUX_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img36 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.36_HARMONIE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+
+.ep_img37 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.37_A AM_MERE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img38 {
+    width: 300px;
+    height: 300px;
+    background-image: url("../img/Resized_mini/5.38_SOUS_LA_NEIGE_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img39 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.39_FLEUR_DES_CHAMPS_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img40 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.40_MODELE_VIVANT_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img41 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.41_AUTOPORTRAIT_1.JPG");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+    transform: rotate(0.25turn);
+}
+.ep_img42 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.42_REMBRANDT_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+.ep_img43 {
+    width: 300px;
+    height: 250px;
+    background-image: url("../img/Resized_mini/5.43_PIERRE_FERMAT_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+
+.img_amma{
+    width: 300px;
+    height: 200px;
+    background-image: url("../img/Resized_mini/regard_1.jpg");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain;
+}
+
+/*FOOTER*/
+footer {
+    display: block;
+    bottom: 0px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+
+
+
+
+/* - - - - - - UTILS - - - - - - - */
+a{
+    color: grey;
+    background-color: none;
+    transition-duration: 1s;
+    /*transition-property: background-color;*/
+    transition-property: color;
+
+
+}
+a:hover {
+    /*margin: 20px 20px 20px 20px ;*/
+    color: darkslategrey;
+    /*background-color: brown;*/
+}
+
+
+
+
+.pad_top {
+    /*padding-top: 50px;*/
+}
+.paddingAmma {
+    /*    padding-top: 50px;
+        padding-bottom: 30px;*/
+}
+.texteCentre {
+    text-align: center;
+    display: block;
+    max-width: 95%;
+    margin: 0    auto;
+}
+
+.colonneImage{
+    background-color: yellow;
+}
+.colonneInsideImg{
+    background-color: red;
+}
+.colonneLegende{
+    background-color: blue;
+
+}
+.colonneInsideLegende{
+    background-color: pink;
+}
+
+.espace_vide{
+    height: 100px;
+}
+/*BOUTON DE RETOUR HAUT DE PAGE*/
+#myBtn {
+
+    font-size: 20px; /* Increase font size */
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 10px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    /*background-color: rgba(194, 194, 214, 0);  Set a background color */
+    color: grey;  
+    cursor: pointer; /* Add a mouse pointer on hover */
+    /* padding: 15px;  Some padding */
+    border-radius: 20px; /* Rounded corners */
+    /*    background-image: url("../img/Resized_mini/retourHaut.png");
+        background-position: bottom;  Center the image 
+        background-repeat: no-repeat;  Do not repeat the image 
+        background-size: contain;
+        width: 100px;
+        height: 100px;*/
+}
+#myBtn:hover {
+    /*background-color: rgba(194, 194, 214, 0.5);  Add a dark-grey background on hover */
+}
+#myBtn {
+    background-color: rgba(194, 194, 214, 0.0);  
+}
+
+
+
+
+
+
+
+
+/* Extra small devices (portrait phones, less than 576px) 
+ No media query for `xs` since this is the default in Bootstrap */
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) { 
+
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) { 
+    .pad_top {
+        padding-top: 0px;
+    }
+    .imgAccueil{
+        margin-top: 50px;
+        transform: scale(1.2);
+    }
+    .expe_img13 {
+        width:  650px;
+        height: 253px;
+    }
+    .regard_img_2 {
+        width: 750px;
+        height: 450px;
+    }
+    .gestionWrap {
+        word-wrap: break-word;
+    }
+    #myBtn {
+
+        font-size: 50px;
+    }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) { 
+    .pad_top {
+        padding-top: 10px;
+    }
+    .imgAccueil{
+        margin-top: 50px;
+        transform: scale(1.2);
+    }
+    .expe_img13 {
+        width:  650px;
+        height: 253px;
+    }
+    .regard_img_2 {
+        width: 750px;
+        height: 450px;
+    }
+
+
+    .ep_img1 {
+        width: 330px;
+        height: 440px;
+    }
+    .ep_img2 {
+        width: 330px;
+        height: 419px;
+    }
+    .ep_img3 {
+        width: 330px;
+        height: 418px;
+    }
+    .ep_img4 {
+        width: 330px;
+        height: 422px;
+    }
+    .ep_img5 {
+        width: 300px;
+        height: 372px;
+    }
+    .ep_img6 {
+        width: 330px;
+        height: 418px;
+    }
+    .ep_img7 {
+        width: 330px;
+        height: 451px;
+    }
+    .ep_img9 {
+        width: 330px;
+        height: 333px;
+    }
+    .ep_img10 {
+        width: 330px;
+        height: 446px;
+    }
+    .ep_img11 {
+        width: 330px;
+        height: 414px;
+    }
+
+    .ep_img24 {
+        width: 560px;
+        height: 740px;
+    }
+
+    .ep_img42 {
+        width: 650px;
+        height: 600px;
+
+    }
+    .ep_img43 {
+        width: 650px;
+        height: 600px;
+    }
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) { 
+    .pad_top {
+        padding-top: 0px;
+    }
+    .imgAccueil{
+        margin-top: 50px;
+        transform: scale(1.2);
+    }
+    .ep_img5_big{
+        width: 400px;
+        height: 547px;
+    }
+
+    .expe_img1 {
+        width:  330px;
+        height: 470px;
+    }
+
+    .expe_img3 {
+        width:  450px;
+        height: 354px;
+    }
+
+    .expe_img4 {
+        width:  330px;
+        height: 438px;
+    }
+    .expe_img5 {
+        width:  330px;
+        height: 256px;
+    }
+
+    .expe_img6 {
+        width:  330px;
+        height: 245px;
+    }
+
+    .expe_img7 {
+        width:  450px;
+        height: 339px;
+    }
+
+    .expe_img9 {
+        width:  330px;
+        height: 282px;
+    }
+
+    .expe_img10 {
+        width:  330px;
+        height: 341px;
+    }
+
+    .expe_img11 {
+        width:  330px;
+        height: 444px;
+    }
+
+    .expe_img13 {
+        width:  650px;
+        max-height: 253px;
+    }
+
+    .expe_img15 {
+        width:  400px;
+        height: 544px;
+    }
+
+    .expe_img16 {
+        width:  400px;
+        height: 536px;
+    }
+
+    .regard_img_2 {
+        width: 750px;
+        height: 450px;
+    }
+
+    .ep_img1 {
+        width: 330px;
+        height: 440px;
+    }
+    .ep_img2 {
+        width: 330px;
+        height: 419px;
+    }
+    .ep_img3 {
+        width: 330px;
+        height: 418px;
+    }
+    .ep_img4 {
+        width: 330px;
+        height: 422px;
+    }
+    .ep_img5 {
+        width: 330px;
+        height: 409px;
+    }
+    .ep_img6 {
+        width: 330px;
+        height: 418px;
+    }
+    .ep_img7 {
+        width: 330px;
+        height: 451px;
+    }
+    .ep_img9 {
+        width: 330px;
+        height: 333px;
+    }
+    .ep_img10 {
+        width: 330px;
+        height: 446px;
+    }
+    .ep_img11 {
+        width: 330px;
+        height: 414px;
+    }
+
+    .ep_img13 {
+        width: 450px;
+        height: 400px;
+    }
+
+    .ep_img14 {
+        width: 450px;
+        height: 570px;
+    }
+    .ep_img15 {
+        width: 450px;
+        height: 570px;
+    }
+    .ep_img16 {
+        width: 450px;
+        height: 558px;
+    }
+    .ep_img17 {
+        width: 450px;
+        height: 556px;
+    }
+    .ep_img18 {
+        width: 422px;
+        height: 592px;
+    }
+
+    .ep_img21 {
+        width: 634px;
+        height: 480px;
+    }
+
+    .ep_img22 {
+        width: 465px;
+        height: 480px;
+    }
+
+    .ep_img23 {
+        width: 479px;
+        height: 480px;
+    }
+    .ep_img24 {
+        width: 560px;
+        height: 740px;
+    }
+
+    .ep_img25 {
+        width: 400px;
+        height: 293px;
+    }
+
+    .ep_img26 {
+        width: 400px;
+        height: 330px;
+    }
+    .ep_img28 {
+        width: 560px;
+        height: 720px;
+    }
+
+    .ep_img30 {
+        width: 400px;
+        height: 358px;
+    }
+
+    .ep_img31 {
+        width: 400px;
+        height: 317px;
+    }
+    .ep_img42 {
+        width: 650px;
+        height: 600px;
+
+    }
+    .ep_img43 {
+        width: 650px;
+        height: 600px;
+    }
+    .img_amma{
+        width: 500px;
+        height: 333px;
+    }
+}
