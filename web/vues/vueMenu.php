@@ -13,8 +13,9 @@
                     <!-- <a href="./index.php">
                         <div class="col-sd-3 align-self-start" id="logoAMMA"></div>
                     </a> -->
-                    <div class="col-sd align-self-center">
-                        <h4 id="tetePage" class="mt-5 mb-5 p-5 border border-dark rounded">
+                    <div class="col-sd align-self-center text-center border border-dark rounded m-5">
+                        <h1 class="p-3" >R&eacute;silience</h1>
+                        <h4 class="mt-5 mb-5 p-5 ">
                             SITE DES CLINIQUES UNIES
                         </h4>
                     </div>
