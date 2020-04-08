@@ -13,67 +13,64 @@ if (!isset($_REQUEST['loc'])) {
 
 switch ($loc) {
     case 1: {
-            include("./vues/vueAccueil.php");
-            include("./vues/vueFooter.php");
+//        ACCUEIL
+//        if Pas connecté
+//        Pourle cas de la déco : Vider la session et le cookie
 
+            include("./vues/vueAccueil.php");
+//            if connecté
+            include("./vues/vueConnected.php");
+            include("./vues/vueFooter.php");
             break;
         }
     case 2: {
+//        CONTACT
             include("./vues/vueContactForm.php");
             include("./vues/vueFooter.php");
-
+            break;
+        }
+    case 3: {
+//              MODIFICATION USER
+            include("./vues/vueEditUser.php");
+            include("./vues/vueFooter.php");
             break;
         }
     default : {
             include("./vues/vueAccueil.php");
             include("./vues/vueFooter.php");
-
             break;
         }
 }
+// INSERER L'AFFICHAGE QUI PREVIENT DE L'UTILISATION DES COOKIES
 ?>
 
 YO
 <p id="ip">ip ici</p>
 <script>
-//    document.writeln("<br/>screen.width: " + screen.width);
-//    document.writeln("<br/>screen.height: " + screen.height);
-//    document.writeln("<br/>screen.availWidth: " + screen.availWidth);
-//    document.writeln("<br/>screen.availHeight: " + screen.availHeight);
-//    document.writeln("<br/>screen.colorDepth: " + screen.colorDepth);
-//    document.writeln("<br/>screen.pixelDepth: " + screen.pixelDepth);
-//    document.writeln("<br/>navigator.appName is: " + screen.pixelDepth);
-//    document.writeln("<br/>Browser CodeName: " + navigator.appCodeName);
-//    document.writeln("<br/>Browser Name: " + navigator.appName);
-//    document.writeln("<br/>Browser Version: " + navigator.appVersion);
-//    document.writeln("<br/>Cookies Enabled: " + navigator.cookieEnabled);
-//    document.writeln("<br/>Platform: " + navigator.platform);
-//    document.writeln("<br/>User-agent header: " + navigator.userAgent);
-    
     let infosUser = {
-    "screen.width" : screen.width,
-    "screen.height" : screen.height,
-    "screen.availWidth" : screen.availWidth,
-    "screen.availHeight" : screen.availHeight,
-    "screen.colorDepth" : screen.colorDepth,
-    "screen.pixelDepth" : screen.pixelDepth,
-    "navigator.appName is" : screen.pixelDepth,
-    "Browser CodeName" : navigator.appCodeName,
-    "Browser Name" : navigator.appName,
-    "Browser Version" : navigator.appVersion,
-    "Cookies Enabled" : navigator.cookieEnabled,
-    "Platform" : navigator.platform,
-    "User-agent header" : navigator.userAgent
+        "screen.width": screen.width,
+        "screen.height": screen.height,
+        "screen.availWidth": screen.availWidth,
+        "screen.availHeight": screen.availHeight,
+        "screen.colorDepth": screen.colorDepth,
+        "screen.pixelDepth": screen.pixelDepth,
+        "navigator.appName is": screen.pixelDepth,
+        "Browser CodeName": navigator.appCodeName,
+        "Browser Name": navigator.appName,
+        "Browser Version": navigator.appVersion,
+        "Cookies Enabled": navigator.cookieEnabled,
+        "Platform": navigator.platform,
+        "User-agent header": navigator.userAgent
     };
 
     console.log(infosUser);
-    
-        $(document).ready(function() {
-      $.getJSON("https://api.ipify.org/?format=json", function(e) {
-        $('.ip').text(e.ip);
-      });
+
+    $(document).ready(function () {
+        $.getJSON("https://api.ipify.org/?format=json", function (e) {
+            $('.ip').text(e.ip);
+        });
     });
-    
+
 //    
 //    var url = "https://haveibeenpwned.com/unifiedsearch/nimenia.duforestel@gmail.com"
 //fetch(url)
