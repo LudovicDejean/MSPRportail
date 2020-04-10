@@ -10,16 +10,25 @@ if (!isset($_REQUEST['loc'])) {
         $loc = $_REQUEST['loc'];
     }
 }
+$_SESSION['Ip_Client']= $_SERVER['REMOTE_ADDR'];
+var_dump($_POST);
+var_dump($_SESSION);
 
 switch ($loc) {
     case 1: {
-//        ACCUEIL
-//        if Pas connecté
-//        Pourle cas de la déco : Vider la session et le cookie
-
-            include("./vues/vueAccueil.php");
+//        ACCUEIL 
+//        TODO !!!!
+//        Pour le cas de la déco : Vider la session et le cookie
+            if ($_POST['decoButton'] === 'deco') {
+                session_destroy();
+            }
+            if ($_SESSION) {
 //            if connecté
-            include("./vues/vueConnected.php");
+                include("./vues/vueConnected.php");
+            } else {
+//        if Pas connecté
+                include("./vues/vueAccueil.php");
+            }
             include("./vues/vueFooter.php");
             break;
         }
@@ -44,9 +53,15 @@ switch ($loc) {
 // INSERER L'AFFICHAGE QUI PREVIENT DE L'UTILISATION DES COOKIES
 ?>
 
-YO
-<p id="ip">ip ici</p>
+
 <script>
+    /***
+     * 
+     * Récupération des informations sur la configuration matérielle de l'utilisateur
+     * 
+     * 
+     * @type object
+     */
     let infosUser = {
         "screen.width": screen.width,
         "screen.height": screen.height,
@@ -57,30 +72,22 @@ YO
         "navigator.appName is": screen.pixelDepth,
         "Browser CodeName": navigator.appCodeName,
         "Browser Name": navigator.appName,
-        "Browser Version": navigator.appVersion,
         "Cookies Enabled": navigator.cookieEnabled,
         "Platform": navigator.platform,
-        "User-agent header": navigator.userAgent
     };
 
     console.log(infosUser);
 
-    $(document).ready(function () {
-        $.getJSON("https://api.ipify.org/?format=json", function (e) {
-            $('.ip').text(e.ip);
-        });
-    });
+    var url = "https://haveibeenpwned.com/unifiedsearch/nimenia.duforestel@gmail.com"
+    fetch(url)
+            .then(function (response) {
+                console.log(response);
+                document.getElementById('ip').innerHTML = response;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
-//    
-//    var url = "https://haveibeenpwned.com/unifiedsearch/nimenia.duforestel@gmail.com"
-//fetch(url)
-//.then(function(response) {
-//    console.log(response);
-//})
-//.catch(function(error) {
-//    console.log(error);
-//});
-//    
 </script>
 
 

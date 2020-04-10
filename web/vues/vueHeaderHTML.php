@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <!-- TITRE ET MENUS -->
 <?php 
-session_name('msprLBPL');
-session_start();
+//session_name('msprLBPL');
+//session_start();
 ?>
 <html lang="fr">
     <head>
         
-        <title>MSPR Sécurité R�silience</title>
+        <title>MSPR Sécurité R�silience</title>
         <meta http-equiv="Content-Language" content="fr">
         <meta charset="UTF-8">
         <meta name="description" content="">
