@@ -1,5 +1,7 @@
 {
     "require": {
-        "pragmarx/google2fa": "^8.0"
+        "pragmarx/google2fa": "^8.0",
+        "vlucas/phpdotenv": "^3.6"
     }
+    
 }

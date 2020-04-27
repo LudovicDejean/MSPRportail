@@ -3,6 +3,11 @@ include("./vues/vueHeaderHTML.php");
 include("./vues/vueMenu.php");
 
 
+// AFFICHAGE DES ERREURS POUR LE DEV: 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if (!isset($_REQUEST['loc'])) {
     $loc = 1;
 } else {
@@ -10,7 +15,7 @@ if (!isset($_REQUEST['loc'])) {
         $loc = $_REQUEST['loc'];
     }
 }
-$_SESSION['Ip_Client']= $_SERVER['REMOTE_ADDR'];
+var_dump($_SERVER['REMOTE_ADDR']);
 var_dump($_POST);
 var_dump($_SESSION);
 
