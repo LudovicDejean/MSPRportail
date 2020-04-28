@@ -55,7 +55,7 @@ try {
             . "CREATE DATABASE IF NOT EXISTS $dbname;";
     // use exec() because no results are returned
     $conn->exec($sql);
-    echo "Base de données crée<br>";
+    echo "Base de données créée<br>";
 } catch (PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();
 }
@@ -69,7 +69,11 @@ $conn = null;
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 
  * 
+ * 
+ * 
  * creation des tables : 
+ * 
+ * 
  * 
  * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -86,7 +90,8 @@ try {
             `email` VARCHAR(100) NOT NULL,
             `infosNavigateur` BLOB NOT NULL,
             `ipUser` VARCHAR(30) NOT NULL,
-            `fk_id_clinique` INT(11) NOT NULL
+            `fk_id_clinique` INT(11) NOT NULL,
+            `dateDeDerniereConnexion` DATETIME DEFAULT NOW()
             ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
             DROP TABLE IF EXISTS `server_cliniques`;
@@ -94,12 +99,23 @@ try {
             `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,    
             `urlClinique` VARCHAR(100) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+            
+            DROP TABLE IF EXISTS `historique_connexions`;
+            CREATE TABLE `historique_connexions` (
+            `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,    
+            `fk_id_user` VARCHAR(30) NOT NULL,
+            `date_de_connexion` DATETIME NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
             ALTER TABLE `users`
-            ADD CONSTRAINT `fk_clinique` FOREIGN KEY (`fk_id_clinique`) REFERENCES `server_cliniques` (`id`);";
+            ADD CONSTRAINT `fk_clinique` FOREIGN KEY (`fk_id_clinique`) REFERENCES `server_cliniques` (`id`);
+            
+            ALTER TABLE `historique_connexions`
+            ADD CONSTRAINT `fk_user` FOREIGN KEY (`fk_id_user`) REFERENCES `users` (`login`);
+            ";
 
     $conn->exec($sql);
-    echo "Tables users et cliniques crées avec succès<br>";
+    echo "Tables users et cliniques créées<br>";
 } catch (PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();
 }
@@ -112,39 +128,12 @@ $conn = null;
 /**
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 
- * Insertion de données de base
+ * 
+ * Insertion de données de base (A faire depuis l'Active Directory)
+ * 
  * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
-$usersBasiques = [
-    ['b.andrieu', 'ba@ba.fr', '{navigateur}', '111.111.111.111', 1],
-    ['p.codron', 'pc@pc.fr', '{navigateur}', '222.222.222.222', 1],
-    ['l.dejean', 'ld@ld.fr', '{navigateur}', '333.333.333.333', 2],
-];
-$boutDeRequete = "";
-
-foreach ($usersBasiques as $user) {
-    $user = implode("','",$user);
-    $boutDeRequete .=' ( \'' . $user . '\' ), ';
-}
-$boutDeRequete = substr($boutDeRequete, 0, -2);
-//    var_dump($boutDeRequete);
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO users (login, email, infosNavigateur, ipUser, fk_id_clinique)
-    VALUES $boutDeRequete; ";
-    // use exec() because no results are returned
-    $conn->exec($sql);
-    echo "Utilisateurs créés<br>";
-} catch (PDOException $e) {
-    echo $sql . "<br>" . $e->getMessage();
-}
-
-$conn = null;
-
-
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     // set the PDO error mode to exception
@@ -157,5 +146,58 @@ try {
 } catch (PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();
 }
+$conn = null;
 
+$usersBasiques = [
+    ['b.andrieu', 'ba@ba.fr', '{navigateur}', '111.111.111.111', 1],
+    ['p.codron', 'pc@pc.fr', '{navigateur}', '222.222.222.222', 1],
+    ['l.dejean', 'ld@ld.fr', '{navigateur}', '333.333.333.333', 2],
+];
+$boutDeRequete = "";
+foreach ($usersBasiques as $user) {
+    $user = implode("','", $user);
+    $boutDeRequete .= ' ( \'' . $user . '\' ), ';
+}
+$boutDeRequete = substr($boutDeRequete, 0, -2);
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "INSERT INTO users (login, email, infosNavigateur, ipUser, fk_id_clinique)
+    VALUES $boutDeRequete; ";
+    $conn->exec($sql);
+    echo "Utilisateurs créés<br>";
+} catch (PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+}
+$conn = null;
+
+/**
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * 
+ * 
+ * Création d'un trigger pour sauvegarder les dates de connexion
+ * 
+ * A chaque connexion, on stocke la date de connexion 
+ * et on archive les 5 dernières dates de connexion
+ * 
+ * 
+ * 
+ *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ */
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "DROP TRIGGER IF EXISTS `users_before_update`; 
+        CREATE TRIGGER `users_before_update` 
+        BEFORE UPDATE ON `users` 
+        FOR EACH ROW 
+        BEGIN
+        INSERT INTO bddPortail.historique_connexions(fk_id_user, date_de_connexion) 
+        VALUES(OLD.login, OLD.dateDeDerniereConnexion);
+        END;";
+    $conn->exec($sql);
+    echo "Trigger d'historisation des dates de connexion des users créé<br>";
+} catch (PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+}
 $conn = null;
