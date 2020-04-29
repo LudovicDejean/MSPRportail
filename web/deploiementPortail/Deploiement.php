@@ -104,6 +104,8 @@ try {
             `infosNavigateur` BLOB NOT NULL,
             `ipUser` VARCHAR(30) NOT NULL,
             `fk_id_clinique` INT(11) NOT NULL,
+            `nombreDeTentatives` INT(11) DEFAULT 1,
+            `estAutorise` BOOLEAN DEFAULT TRUE,
             `dateDeDerniereConnexion` DATETIME DEFAULT NOW()
             ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

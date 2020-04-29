@@ -16,7 +16,7 @@
                     <div class="col-sd align-self-center text-center border border-dark rounded m-5">
                         <h1 class="p-3" >R&eacute;silience</h1>
                         <h4 class="mt-5 mb-5 p-5 ">
-                            SITE DES CLINIQUES UNIES
+                            LE SITE DES CLINIQUES UNIES
                         </h4>
                     </div>
                 </div>

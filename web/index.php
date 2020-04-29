@@ -1,7 +1,8 @@
 <?php
 include("./vues/vueHeaderHTML.php");
 include("./vues/vueMenu.php");
-
+session_name('Résilience');
+session_start();
 
 // AFFICHAGE DES ERREURS POUR LE DEV: 
 ini_set('display_errors', 1);
@@ -24,8 +25,10 @@ switch ($loc) {
 //        ACCUEIL 
 //        TODO !!!!
 //        Pour le cas de la déco : Vider la session et le cookie
-            if ($_POST['decoButton'] === 'deco') {
-                session_destroy();
+            if ($_POST) {
+                if ($_POST['decoButton'] === 'deco') {
+                    session_destroy();
+                }
             }
             if ($_SESSION) {
 //            if connecté
@@ -82,16 +85,18 @@ switch ($loc) {
     };
 
     console.log(infosUser);
+    
+    
 
-    var url = "https://haveibeenpwned.com/unifiedsearch/nimenia.duforestel@gmail.com"
-    fetch(url)
-            .then(function (response) {
-                console.log(response);
-                document.getElementById('ip').innerHTML = response;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+//    let url = "https://haveibeenpwned.com/unifiedsearch/nimenia.duforestel@gmail.com"
+//    fetch(url)
+//            .then(function (response) {
+//                console.log(response);
+//                document.getElementById('ip').innerHTML = response;
+//            })
+//            .catch(function (error) {
+//                console.log(error);
+//            });
 
 </script>
 
