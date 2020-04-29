@@ -40,6 +40,19 @@ $username = $_ENV['DB_USERNAME'];
 $password = $_ENV['DB_PASSWORD'];
 $dbname = $_ENV['DB_DATABASE'];
 
+$usersBasiques = [
+    ['b.andrieu', 'ba@ba.fr', '{navigateur}', '111.111.111.111', 1],
+    ['p.codron', 'pc@pc.fr', '{navigateur}', '222.222.222.222', 1],
+    ['l.dejean', 'ld@ld.fr', '{navigateur}', '333.333.333.333', 2],
+];
+
+$cliniquesBasiques = [
+    '192.123.000.453',
+    '192.200.23.45'
+];
+
+
+
 /**
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 
@@ -134,12 +147,18 @@ $conn = null;
  * 
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
+$boutDeRequeteClinique = "";
+foreach ($cliniquesBasiques as $ipClinique) {
+    $boutDeRequeteClinique .= ' ( \'' . $ipClinique . '\' ), ';
+}
+$boutDeRequeteClinique = substr($boutDeRequeteClinique, 0, -2);
+
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO server_cliniques (urlClinique) 
-    VALUES ('001.001.001.001'), ('002.002.002.002'); ";
+    VALUES $boutDeRequeteClinique; ";
     // use exec() because no results are returned
     $conn->exec($sql);
     echo "Cliniques créées<br>";
@@ -148,22 +167,18 @@ try {
 }
 $conn = null;
 
-$usersBasiques = [
-    ['b.andrieu', 'ba@ba.fr', '{navigateur}', '111.111.111.111', 1],
-    ['p.codron', 'pc@pc.fr', '{navigateur}', '222.222.222.222', 1],
-    ['l.dejean', 'ld@ld.fr', '{navigateur}', '333.333.333.333', 2],
-];
-$boutDeRequete = "";
+
+$boutDeRequeteUser = "";
 foreach ($usersBasiques as $user) {
     $user = implode("','", $user);
-    $boutDeRequete .= ' ( \'' . $user . '\' ), ';
+    $boutDeRequeteUser .= ' ( \'' . $user . '\' ), ';
 }
-$boutDeRequete = substr($boutDeRequete, 0, -2);
+$boutDeRequeteUser = substr($boutDeRequeteUser, 0, -2);
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO users (login, email, infosNavigateur, ipUser, fk_id_clinique)
-    VALUES $boutDeRequete; ";
+    VALUES $boutDeRequeteUser; ";
     $conn->exec($sql);
     echo "Utilisateurs créés<br>";
 } catch (PDOException $e) {
@@ -184,6 +199,7 @@ $conn = null;
  * 
  *  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
+// A OPTIMISER POUR QUE ÇA TRIGGUE QUE LORSQUE LA DATE CHANGE
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -192,8 +208,10 @@ try {
         BEFORE UPDATE ON `users` 
         FOR EACH ROW 
         BEGIN
+        IF NOT (NEW.dateDeDerniereConnexion <=> OLD.dateDeDerniereConnexion)  THEN 
         INSERT INTO bddPortail.historique_connexions(fk_id_user, date_de_connexion) 
-        VALUES(OLD.login, OLD.dateDeDerniereConnexion);
+        VALUES(OLD.login, OLD.dateDeDerniereConnexion); 
+        END IF; 
         END;";
     $conn->exec($sql);
     echo "Trigger d'historisation des dates de connexion des users créé<br>";
